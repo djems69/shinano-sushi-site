@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Shinano Sushi — Annemasse | Restaurant japonais authentique</title>
+<meta name="description" content="Shinano Sushi, restaurant japonais à Annemasse. Sushis, makis, rolls et plats chauds faits maison. Sur place, à emporter ou en livraison.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black-deep:#0a0908;
+    --black-soft:#151210;
+    --black-card:#1b1714;
+    --gold:#c9a44c;
+    --gold-bright:#e8cd87;
+    --gold-dim:#8a723a;
+    --sakura:#f2c6d6;
+    --sakura-deep:#d88fa8;
+    --river:#4a86a8;
+    --ivory:#efe6d8;
+    --line:rgba(201,164,76,0.22);
+    --shadow:0 20px 50px rgba(0,0,0,0.55);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--black-deep);
+    color:var(--ivory);
+    font-family:'Zen Kaku Gothic New', sans-serif;
+    font-weight:400;
+    line-height:1.6;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.font-display{
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+    letter-spacing:0.02em;
+  }
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  ul{list-style:none;}
+  button{font-family:inherit; cursor:pointer;}
+
+  .wrap{max-width:640px; margin:0 auto; padding:0 20px;}
+
+  /* ---------- background texture ---------- */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background:
+      radial-gradient(ellipse at 20% 0%, rgba(201,164,76,0.08), transparent 55%),
+      radial-gradient(ellipse at 85% 15%, rgba(242,198,214,0.06), transparent 50%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  /* ---------- river divider (signature element) ---------- */
+  .river-divider{
+    width:100%;
+    height:34px;
+    position:relative;
+    z-index:2;
+  }
+  .river-divider svg{width:100%; height:100%; display:block;}
+  .river-divider path{
+    fill:none;
+    stroke:url(#riverGrad);
+    stroke-width:1.4;
+    stroke-linecap:round;
+  }
+
+  /* ---------- sakura petals ---------- */
+  .petals{position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden;}
+  .petal{
+    position:absolute;
+    top:-10%;
+    font-size:16px;
+    line-height:1;
+    color:var(--sakura);
+    filter:blur(0.4px) saturate(0.9);
+    opacity:0.32;
+    animation:fall linear infinite;
+    will-change:transform;
+  }
+  @keyframes fall{
+    0%{transform:translateY(-5vh) translateX(0) rotate(0deg); opacity:0;}
+    10%{opacity:0.32;}
+    90%{opacity:0.24;}
+    100%{transform:translateY(105vh) translateX(40px) rotate(220deg); opacity:0;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .petal{animation:none; display:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  /* ---------- header / nav ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0;
+    z-index:50;
+    background:rgba(10,9,8,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 20px;
+    max-width:640px; margin:0 auto;
+  }
+  .brand{display:flex; align-items:center; gap:10px;}
+  .brand img{height:38px; width:auto;}
+  .brand-text{font-family:'Shippori Mincho',serif; font-size:16px; color:var(--gold-bright); letter-spacing:0.08em;}
+  .brand-text span{display:block; font-size:9px; color:var(--sakura); font-family:'Zen Kaku Gothic New',sans-serif; letter-spacing:0.35em; margin-top:2px;}
+
+  .burger{
+    width:34px; height:34px;
+    border:1px solid var(--line);
+    border-radius:50%;
+    background:transparent;
+    position:relative;
+    flex-shrink:0;
+  }
+  .burger span{
+    position:absolute; left:9px; right:9px; height:1px; background:var(--gold);
+    transition:transform .3s ease, opacity .3s ease;
+  }
+  .burger span:nth-child(1){top:13px;}
+  .burger span:nth-child(2){top:17px;}
+  .burger span:nth-child(3){top:21px;}
+  .burger.open span:nth-child(1){transform:translateY(4px) rotate(45deg);}
+  .burger.open span:nth-child(2){opacity:0;}
+  .burger.open span:nth-child(3){transform:translateY(-4px) rotate(-45deg);}
+
+  .menu-panel{
+    position:fixed; top:63px; left:0; right:0;
+    background:var(--black-soft);
+    border-bottom:1px solid var(--line);
+    max-height:0; overflow:hidden;
+    transition:max-height .4s ease;
+    z-index:49;
+  }
+  .menu-panel.open{max-height:400px;}
+  .menu-panel ul{padding:10px 20px 20px;}
+  .menu-panel li a{
+    display:block; padding:12px 0;
+    border-bottom:1px solid var(--line);
+    font-size:14px; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--ivory);
+  }
+  .menu-panel li:last-child a{border-bottom:none;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative; z-index:2;
+    padding:120px 20px 60px;
+    text-align:center;
+  }
+  .hero-logo{width:150px; margin:0 auto 22px; filter:drop-shadow(0 8px 24px rgba(201,164,76,0.25));}
+  .eyebrow{
+    font-size:11px; letter-spacing:0.4em; text-transform:uppercase;
+    color:var(--sakura); margin-bottom:14px;
+  }
+  .hero h1{
+    font-size:38px; color:var(--gold-bright); line-height:1.15;
+    margin-bottom:10px;
+  }
+  .hero .sub{font-size:12px; letter-spacing:0.35em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:22px;}
+  .hero p.tagline{
+    font-size:15px; color:rgba(239,230,216,0.8); max-width:400px; margin:0 auto 30px;
+  }
+  .hero-badges{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:30px;}
+  .badge{
+    font-size:11px; letter-spacing:0.08em; text-transform:uppercase;
+    border:1px solid var(--line); border-radius:30px; padding:7px 14px;
+    color:var(--gold);
+  }
+  .cta-row{display:flex; flex-direction:column; gap:12px; max-width:320px; margin:0 auto;}
+  .btn{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    padding:15px 20px; border-radius:4px;
+    font-size:13px; letter-spacing:0.12em; text-transform:uppercase;
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg, var(--gold), var(--gold-dim));
+    color:var(--black-deep); font-weight:700;
+    box-shadow:0 12px 30px rgba(201,164,76,0.25);
+  }
+  .btn-outline{
+    border:1px solid var(--gold-dim);
+    color:var(--gold-bright);
+  }
+  .btn:active{transform:scale(0.97);}
+
+  /* ---------- section shell ---------- */
+  section{position:relative; z-index:2; padding:60px 0;}
+  .section-head{text-align:center; margin-bottom:34px; padding:0 20px;}
+  .section-eyebrow{
+    font-size:10px; letter-spacing:0.4em; text-transform:uppercase;
+    color:var(--sakura-deep); margin-bottom:8px;
+  }
+  .section-head h2{font-size:28px; color:var(--gold-bright);}
+  .section-head p{font-size:13.5px; color:rgba(239,230,216,0.65); max-width:420px; margin:10px auto 0;}
+
+  /* ---------- about ---------- */
+  .about-card{
+    background:var(--black-card);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:26px 22px;
+    font-size:14.5px;
+    color:rgba(239,230,216,0.85);
+  }
+  .about-card strong{color:var(--gold-bright); font-weight:500;}
+
+  /* ---------- menu ---------- */
+  .menu-tabs{
+    display:flex; gap:10px;
+    overflow-x:auto;
+    padding:2px 2px 16px;
+    -ms-overflow-style:none; scrollbar-width:none;
+  }
+  .menu-tabs::-webkit-scrollbar{display:none;}
+  .tab-pill{
+    flex-shrink:0;
+    border:1px solid var(--line);
+    border-radius:30px;
+    padding:11px 22px;
+    background:transparent;
+    color:var(--gold);
+    font-size:12px; letter-spacing:0.14em; text-transform:uppercase;
+    transition:background .25s ease, color .25s ease, border-color .25s ease;
+  }
+  .tab-pill.active{
+    background:linear-gradient(135deg, var(--gold), var(--gold-dim));
+    color:var(--black-deep);
+    font-weight:700;
+    border-color:transparent;
+  }
+
+  .menu-panel-card{
+    background:var(--black-card);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:8px 20px 6px;
+  }
+  .menu-cat-sub{
+    font-size:10px; letter-spacing:0.15em; color:var(--gold-dim);
+    text-transform:uppercase; padding:14px 0 4px;
+    font-family:'Zen Kaku Gothic New',sans-serif;
+  }
+  .dish-list{padding:0 0 14px;}
+  .dish{
+    display:flex; justify-content:space-between; align-items:center; gap:12px;
+    padding:11px 0;
+    border-top:1px solid rgba(201,164,76,0.12);
+    font-size:14px;
+    animation:dish-in .35s ease;
+  }
+  @keyframes dish-in{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);}}
+  .dish:first-child{border-top:none;}
+  .dish .dish-main{display:flex; align-items:center; gap:10px; min-width:0; flex:1;}
+  .dish .dish-image{
+    width:44px; height:44px; object-fit:cover; border-radius:6px;
+    border:1px solid rgba(201,164,76,0.2); flex-shrink:0;
+  }
+  .dish .name{color:rgba(239,230,216,0.9);}
+  .dish .dish-meta{display:flex; align-items:center; flex-shrink:0;}
+  .dish .price{
+    color:var(--gold); white-space:nowrap; font-variant-numeric:tabular-nums;
+    font-weight:500;
+  }
+  .dish .dots{flex:1; min-width:16px; border-bottom:1px dotted rgba(201,164,76,0.25); margin:0 4px 4px;}
+
+  .menu-note{
+    text-align:center; font-size:12px; color:rgba(239,230,216,0.55);
+    margin-top:18px; padding:0 20px;
+  }
+
+  /* ---------- avis ---------- */
+  .rating-card{
+    text-align:center;
+    background:var(--black-card);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:32px 22px;
+  }
+  .stars{font-size:22px; letter-spacing:4px; color:var(--gold); margin-bottom:10px;}
+  .rating-score{font-family:'Shippori Mincho',serif; font-size:44px; color:var(--gold-bright);}
+  .rating-score span{font-size:20px; color:var(--gold-dim);}
+  .rating-count{font-size:13px; color:rgba(239,230,216,0.65); margin-top:4px; letter-spacing:0.05em;}
+  .rating-tags{display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-top:18px;}
+  .rating-tags span{
+    font-size:11px; border:1px solid var(--line); border-radius:30px;
+    padding:6px 12px; color:var(--sakura);
+  }
+  .rating-card .btn{margin-top:22px; display:inline-flex; padding:13px 26px;}
+
+  /* ---------- localisation / horaires ---------- */
+  .info-grid{display:flex; flex-direction:column; gap:16px;}
+  .info-card{
+    background:var(--black-card); border:1px solid var(--line); border-radius:6px;
+    padding:22px;
+  }
+  .info-card h3{font-size:15px; color:var(--gold-bright); margin-bottom:14px; letter-spacing:0.04em;}
+  .map-embed{border-radius:6px; overflow:hidden; border:1px solid var(--line); margin-bottom:16px;}
+  .map-embed iframe{width:100%; height:230px; border:0; display:block; filter:grayscale(0.25) contrast(1.05);}
+  .addr-line{font-size:14px; color:rgba(239,230,216,0.85); margin-bottom:4px;}
+  .addr-sub{font-size:12px; color:rgba(239,230,216,0.5);}
+  .shop-note{
+    margin-top:12px; padding:12px 14px; border:1px solid rgba(201,164,76,0.2);
+    border-radius:6px; background:rgba(201,164,76,0.06);
+    font-size:13px; color:rgba(239,230,216,0.82); line-height:1.6;
+  }
+
+  table.hours{width:100%; border-collapse:collapse; font-size:13.5px;}
+  table.hours tr{border-top:1px solid rgba(201,164,76,0.12);}
+  table.hours tr:first-child{border-top:none;}
+  table.hours td{padding:9px 0; color:rgba(239,230,216,0.8);}
+  table.hours td:last-child{text-align:right; color:var(--gold);}
+  table.hours tr.today td{color:var(--gold-bright); font-weight:700;}
+  table.hours tr.closed td:last-child{color:var(--sakura-deep);}
+
+  .contact-list{display:flex; flex-direction:column; gap:10px;}
+  .contact-list a{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 16px; border:1px solid var(--line); border-radius:6px;
+    font-size:13.5px; color:var(--ivory);
+  }
+  .contact-list a .lbl{color:rgba(239,230,216,0.55); font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; display:block; margin-bottom:2px;}
+  .contact-list a .val{color:var(--gold-bright);}
+
+  /* ---------- footer ---------- */
+  footer{
+    position:relative; z-index:2;
+    padding:40px 20px 30px; text-align:center;
+    border-top:1px solid var(--line);
+  }
+  footer img{height:44px; margin:0 auto 12px; opacity:0.9;}
+  footer .fname{font-family:'Shippori Mincho',serif; color:var(--gold-bright); font-size:16px; letter-spacing:0.08em;}
+  footer .faddr{font-size:12px; color:rgba(239,230,216,0.5); margin-top:6px;}
+  footer .fnote{font-size:11px; color:rgba(239,230,216,0.35); margin-top:18px;}
+
+  .social-row{display:flex; gap:12px; justify-content:center; margin:22px 0 6px;}
+  .social-row a{
+    width:40px; height:40px; border-radius:50%;
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--gold-bright);
+    transition:transform .25s ease, border-color .25s ease, color .25s ease;
+  }
+  .social-row a:hover{border-color:var(--gold); color:var(--sakura); transform:translateY(-2px);}
+  .social-row a svg{width:18px; height:18px; fill:currentColor;}
+
+  /* sticky order bar (mobile) */
+  .sticky-cta{
+    position:fixed; left:0; right:0; bottom:0; z-index:40;
+    background:rgba(10,9,8,0.92); backdrop-filter:blur(10px);
+    border-top:1px solid var(--line);
+    padding:10px 16px; padding-bottom:calc(10px + env(safe-area-inset-bottom));
+    display:flex; gap:10px;
+  }
+  .sticky-cta .btn{flex:1; padding:12px;}
+
+  @media (min-width:640px){
+    .hero h1{font-size:46px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="petals" id="petals"></div>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="riverGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8a723a" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#e8cd87" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#8a723a" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<header>
+  <div class="nav-row">
+    <a class="brand" href="#accueil">
+      <img src="assets/logo.png" alt="Shinano Sushi">
+      <span class="brand-text">Shinano<span>SUSHI · ANNEMASSE</span></span>
+    </a>
+    <button class="burger" id="burgerBtn" aria-label="Ouvrir le menu"><span></span><span></span><span></span></button>
+  </div>
+  <nav class="menu-panel" id="menuPanel">
+    <ul>
+      <li><a href="#apropos">À propos</a></li>
+      <li><a href="#carte">La carte</a></li>
+      <li><a href="#avis">Avis clients</a></li>
+      <li><a href="#localisation">Localisation &amp; horaires</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="accueil">
+
+  <section class="hero">
+    <img class="hero-logo" src="assets/logo.png" alt="Shinano Sushi — logo">
+    <p class="eyebrow">Restaurant Japonais · Annemasse</p>
+    <h1>Shinano Sushi</h1>
+    <p class="sub">Fraîcheur · Tradition · Précision</p>
+        <p class="tagline">La pureté du Japon sans artifices.</p>
+    <p class="tagline">Sushis, makis et plats chauds préparés avec soin.</p>
+    <div class="hero-badges">
+      <span class="badge">★ 5,0 / 5 — 56 avis</span>
+      <span class="badge">Sur place · À emporter · Livraison</span>
+    </div>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#carte">Découvrir la carte</a>
+      <a class="btn btn-outline" href="https://www.ubereats.com/store-browse-uuid/c22dcb3f-5f8e-424e-8bd0-4fd27d4b2b5a?diningMode=DELIVERY" target="_blank" rel="noopener">Commander sur Uber Eats</a>
+    </div>
+  </section>
+
+  <div class="river-divider"><svg viewBox="0 0 400 34" preserveAspectRatio="none"><path d="M0,17 C60,2 100,32 160,17 C220,2 260,32 320,17 C360,6 380,22 400,17"/></svg></div>
+
+  <section id="apropos">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="section-eyebrow">L'esprit de la maison</p>
+        <h2>Une table japonaise à Annemasse</h2>
+      </div>
+      <div class="about-card">
+        <p>Chez <strong>Shinano Sushi</strong>, chaque plat est préparé avec des produits frais et une exigence artisanale : hosomaki, uramaki, temaki, rolls signature et plats chauds, dans un cadre sobre et chaleureux.</p>
+        <p style="margin-top:14px;">Le nom du restaurant rend hommage à la rivière Shinano, la plus longue du Japon — un clin d'œil au pont et au cours d'eau qui composent notre emblème.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="river-divider"><svg viewBox="0 0 400 34" preserveAspectRatio="none"><path d="M0,17 C60,2 100,32 160,17 C220,2 260,32 320,17 C360,6 380,22 400,17"/></svg></div>
+
+  <section id="carte">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="section-eyebrow">La carte</p>
+        <h2>Menu complet</h2>
+        <p>Sélectionnez une catégorie pour afficher les plats et leurs prix.</p>
+      </div>
+
+      <div class="menu-tabs" id="menuTabs"></div>
+      <div class="menu-panel-card">
+        <div id="menuList"></div>
+      </div>
+
+      <p class="menu-note">Carte et prix communiqués par le restaurant, susceptibles d'évoluer.</p>
+    </div>
+  </section>
+
+  <div class="river-divider"><svg viewBox="0 0 400 34" preserveAspectRatio="none"><path d="M0,17 C60,2 100,32 160,17 C220,2 260,32 320,17 C360,6 380,22 400,17"/></svg></div>
+
+  <section id="avis">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="section-eyebrow">Ils sont venus</p>
+        <h2>Avis clients</h2>
+      </div>
+      <div class="rating-card">
+        <div class="stars">★★★★★</div>
+        <div class="rating-score">5,0<span>/5</span></div>
+        <div class="rating-count">Sur la base de 56 avis Google</div>
+        <div class="rating-tags">
+          <span>Cadre agréable</span>
+          <span>Fraîcheur</span>
+          <span>Service soigné</span>
+        </div>
+        <a class="btn btn-outline" href="https://maps.app.goo.gl/PD2La4g8Db7dU7jz9?g_st=aw" target="_blank" rel="noopener">Voir les avis sur Google</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="river-divider"><svg viewBox="0 0 400 34" preserveAspectRatio="none"><path d="M0,17 C60,2 100,32 160,17 C220,2 260,32 320,17 C360,6 380,22 400,17"/></svg></div>
+
+  <section id="localisation">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="section-eyebrow">Nous trouver</p>
+        <h2>Localisation &amp; horaires</h2>
+      </div>
+      <div class="info-grid">
+        <div class="info-card">
+          <h3>Adresse</h3>
+          <div class="map-embed">
+            <iframe src="https://www.google.com/maps?q=Shinano+Sushi,32+Rue+du+Faucigny,74100+Annemasse&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Carte Shinano Sushi"></iframe>
+          </div>
+          <p class="addr-line">32 Rue du Faucigny, 74100 Annemasse</p>
+          <p class="addr-sub">France</p>
+          <p class="shop-note">Le restaurant possède aussi une petite épicerie, avec des produits japonais soigneusement sélectionnés : chips, bonbons et boissons.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Horaires d'ouverture</h3>
+          <table class="hours" id="hoursTable">
+            <tr data-day="1"><td>Lundi</td><td>11h30–14h30 · 18h–22h30</td></tr>
+            <tr data-day="2" class="closed"><td>Mardi</td><td>Fermé</td></tr>
+            <tr data-day="3"><td>Mercredi</td><td>11h30–14h30 · 18h–22h30</td></tr>
+            <tr data-day="4"><td>Jeudi</td><td>11h30–14h30 · 18h–22h30</td></tr>
+            <tr data-day="5"><td>Vendredi</td><td>11h30–14h30 · 18h–23h</td></tr>
+            <tr data-day="6"><td>Samedi</td><td>11h30–14h30 . 18h-23h</td></tr>
+            <tr data-day="0"><td>Dimanche</td><td>11h30–14h30 . 18h-23h</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="river-divider"><svg viewBox="0 0 400 34" preserveAspectRatio="none"><path d="M0,17 C60,2 100,32 160,17 C220,2 260,32 320,17 C360,6 380,22 400,17"/></svg></div>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="section-eyebrow">Un mot, un appel</p>
+        <h2>Contact</h2>
+      </div>
+      <div class="contact-list">
+        <a href="tel:+33450743632"><span><span class="lbl">Téléphone</span><span class="val">04 50 74 36 32</span></span><span>↗</span></a>
+        <a href="https://maps.app.goo.gl/PD2La4g8Db7dU7jz9?g_st=aw" target="_blank" rel="noopener"><span><span class="lbl">Itinéraire</span><span class="val">Voir sur Google Maps</span></span><span>↗</span></a>
+        <a href="https://www.ubereats.com/store-browse-uuid/c22dcb3f-5f8e-424e-8bd0-4fd27d4b2b5a?diningMode=DELIVERY" target="_blank" rel="noopener"><span><span class="lbl">Livraison</span><span class="val">Commander sur Uber Eats</span></span><span>↗</span></a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <img src="assets/logo.png" alt="Shinano Sushi">
+  <div class="fname">Shinano Sushi</div>
+  <div class="faddr">32 Rue du Faucigny, 74100 Annemasse</div>
+
+  <div class="social-row">
+    <a href="https://www.instagram.com/shinano_sushi74?utm_source=qr&igsh=YTIwMmphZHlscGU4" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.8.07 1.2.06 2 .25 2.7.53a5.4 5.4 0 0 1 2 1.3 5.4 5.4 0 0 1 1.3 2c.28.7.47 1.5.53 2.7.06 1.2.07 1.6.07 4.8s0 3.6-.07 4.8c-.06 1.2-.25 2-.53 2.7a5.4 5.4 0 0 1-1.3 2 5.4 5.4 0 0 1-2 1.3c-.7.28-1.5.47-2.7.53-1.2.06-1.6.07-4.8.07s-3.6 0-4.8-.07c-1.2-.06-2-.25-2.7-.53a5.4 5.4 0 0 1-2-1.3 5.4 5.4 0 0 1-1.3-2c-.28-.7-.47-1.5-.53-2.7C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.8c.06-1.2.25-2 .53-2.7a5.4 5.4 0 0 1 1.3-2 5.4 5.4 0 0 1 2-1.3c.7-.28 1.5-.47 2.7-.53C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.15 0-3.52 0-4.76.07-1 .05-1.55.21-1.9.35-.48.19-.83.41-1.19.77-.36.36-.58.71-.77 1.19-.14.35-.3.9-.35 1.9C3 9.48 3 9.85 3 13s0 3.52.07 4.76c.05 1 .21 1.55.35 1.9.19.48.41.83.77 1.19.36.36.71.58 1.19.77.35.14.9.3 1.9.35C8.48 22 8.85 22 12 22s3.52 0 4.76-.07c1-.05 1.55-.21 1.9-.35.48-.19.83-.41 1.19-.77.36-.36.58-.71.77-1.19.14-.35.3-.9.35-1.9.07-1.24.07-1.61.07-4.76s0-3.52-.07-4.76c-.05-1-.21-1.55-.35-1.9a3.6 3.6 0 0 0-.77-1.19 3.6 3.6 0 0 0-1.19-.77c-.35-.14-.9-.3-1.9-.35C15.52 4 15.15 4 12 4zm0 3.4a4.6 4.6 0 1 1 0 9.2 4.6 4.6 0 0 1 0-9.2zm0 1.8a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6zm5.85-2a1.07 1.07 0 1 1-2.14 0 1.07 1.07 0 0 1 2.14 0z"/></svg>
+    </a>
+    <a href="https://www.tiktok.com/@shinano.sushi?_r=1&_t=ZN-9801opluO3i" target="_blank" rel="noopener" aria-label="TikTok">
+      <svg viewBox="0 0 24 24"><path d="M16.6 2h-3.2v13.9c0 1.5-1.2 2.7-2.7 2.7a2.7 2.7 0 0 1-2.7-2.7 2.7 2.7 0 0 1 2.7-2.7c.3 0 .6.05.86.13V10c-.28-.04-.57-.06-.86-.06A5.9 5.9 0 0 0 4.7 15.9 5.9 5.9 0 0 0 10.6 21.8a5.9 5.9 0 0 0 5.9-5.9V8.6a8.2 8.2 0 0 0 4.8 1.55V6.95a4.98 4.98 0 0 1-4.7-4.95z"/></svg>
+    </a>
+    <a href="https://www.snapchat.com/add/shinanosushi74?share_id=_Efvc_gT3jw&locale=fr-FR" target="_blank" rel="noopener" aria-label="Snapchat">
+      <svg viewBox="0 0 24 24"><path d="M12.03 2.5c2.9 0 5.02 2.15 5.13 4.9.03.72.02 1.4 0 2.03l.01.2c.02.09.1.16.31.25.35.14 1.05.24 1.3.27.35.05.63.32.63.66 0 .3-.2.55-.47.63-.02.16-.07.5-.24.9-.24.55-.66 1-1.28 1.32.02.16.09.4.28.6.3.32.85.55 1.66.68.28.05.49.29.49.58 0 .27-.19.5-.45.57-.4.11-1.14.35-1.42.6-.14.13-.19.28-.24.5-.04.2-.09.44-.24.68-.32.5-.9.72-1.72.66-.55-.04-1.05-.22-1.5-.38-.44-.16-.85-.3-1.25-.3-.42 0-.78.14-1.16.3-.55.24-1.17.5-2.02.5-.85 0-1.47-.26-2.02-.5-.38-.16-.74-.3-1.16-.3-.4 0-.81.14-1.25.3-.45.16-.95.34-1.5.38-.82.06-1.4-.16-1.72-.66-.15-.24-.2-.48-.24-.68-.05-.22-.1-.37-.24-.5-.28-.25-1.02-.49-1.42-.6a.59.59 0 0 1-.45-.57c0-.29.21-.53.49-.58.81-.13 1.36-.36 1.66-.68.19-.2.26-.44.28-.6-.62-.32-1.04-.77-1.28-1.32-.17-.4-.22-.74-.24-.9a.63.63 0 0 1-.47-.63c0-.34.28-.61.63-.66.25-.03.95-.13 1.3-.27.21-.09.29-.16.31-.25l.01-.2a17.6 17.6 0 0 1 0-2.03c.11-2.75 2.23-4.9 5.13-4.9z"/></svg>
+    </a>
+    <a href="https://www.facebook.com/share/17YE3q5dz2/" target="_blank" rel="noopener" aria-label="Facebook">
+      <svg viewBox="0 0 24 24"><path d="M13.5 21.9v-8.1h2.7l.4-3.15h-3.1V8.7c0-.9.25-1.5 1.55-1.5h1.65V4.4c-.29-.04-1.27-.12-2.4-.12-2.38 0-4 1.45-4 4.1v2.25H7.6v3.15h2.75v8.1h3.15z"/></svg>
+    </a>
+  </div>
+
+  <div class="fnote">© Shinano Sushi — Cuisine japonaise. Réservation non disponible en ligne, merci de nous appeler.</div>
+</footer>
+
+<div class="sticky-cta">
+  <a class="btn btn-outline" href="tel:+33450743632">Appeler</a>
+  <a class="btn btn-primary" href="https://www.ubereats.com/store-browse-uuid/c22dcb3f-5f8e-424e-8bd0-4fd27d4b2b5a?diningMode=DELIVERY" target="_blank" rel="noopener">Commander</a>
+</div>
+
+<script>
+// ---- burger nav ----
+const burger = document.getElementById('burgerBtn');
+const panel = document.getElementById('menuPanel');
+burger.addEventListener('click', () => {
+  burger.classList.toggle('open');
+  panel.classList.toggle('open');
+});
+panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  burger.classList.remove('open'); panel.classList.remove('open');
+}));
+
+// ---- sakura petals ----
+const petalHost = document.getElementById('petals');
+const PETAL_COUNT = 14;
+const BLOSSOMS = ['❀', '✿', '❁'];
+for (let i = 0; i < PETAL_COUNT; i++) {
+  const p = document.createElement('div');
+  p.className = 'petal';
+  p.textContent = BLOSSOMS[Math.floor(Math.random() * BLOSSOMS.length)];
+  const left = Math.random() * 100;
+  const size = 10 + Math.random() * 10;
+  const duration = 12 + Math.random() * 12;
+  const delay = Math.random() * 14;
+  p.style.left = left + 'vw';
+  p.style.fontSize = size + 'px';
+  p.style.animationDuration = duration + 's';
+  p.style.animationDelay = delay + 's';
+  petalHost.appendChild(p);
+}
+
+// ---- menu data & accordion ----
+const MENU = [
+  { title: 'Entrées', sub: '', items: [
+    { name: 'Salade d’algues (Wakamé)', price: '5,00 €', image: 'assets/salade-algue.jpg' },
+    { name: 'Salade de calamar (Chukaita)', price: '5,80 €', image: 'assets/salade-calamar.jpg' },
+    ['Salade édamame', '4,50 €'],
+    ['Salade composée (crabe, crevette, saumon)', '6,90 €'],
+    { name: 'Portion de riz', price: '3,50 €', image: 'assets/portion-riz.jpg' },
+  ]},
+  { title: 'Hosomaki', sub: 'x6 pièces', items: [
+    { name: 'Saumon', price: '6,20 €', image: 'assets/hosomaki-saumon.jpg' },
+    { name: 'Saumon cheese ciboulette', price: '6,60 €', image: 'assets/hosomaki-cheese.jpg' },
+    { name: 'Thon rouge', price: '6,90 €', image: 'assets/hosomaki-thon.jpg' },
+    { name: 'Avocat, philadelphia', price: '5,20 €', image: 'assets/hosomaki-avocat.jpg' },
+    { name: 'Concombre, sésame', price: '5,20 €', image: 'assets/husomaki-concombre.jpg' },
+    { name: 'Carotte, concombre avocat', price: '5,20 €', image: 'assets/hosomaki-carotte.jpg' },
+    ['Surimi mariné, avocat', '6,70 €'],
+    { name: 'Crevette spicy', price: '6,60 €', image: 'assets/hosomaki-crevette.jpg' },
+  ]},
+  { title: 'Uramaki', sub: 'x8 pièces', items: [
+    { name: 'Saumon avocat', price: '7,90 €', image: 'assets/uramaki-saumon.jpg' },
+    { name: 'Thon mariné, truffe, concombre', price: '9,50 €', image: 'assets/uramaki-thon.jpg' },
+    { name: 'Saint-Jacques marinées', price: '9,90 €', image: 'assets/uramaki-saint-jacque.jpg' },
+    { name: 'Poulet pané, concombre avocat', price: '7,90 €', image: 'assets/uramaki-poulet.jpg' },
+    { name: 'Crevette tempura, avocat', price: '8,90 €', image: 'assets/uramaki-crevette.jpg' },
+    { name: 'Thon cuit mariné, concombre', price: '8,90 €', image: 'assets/uramaki-thon-cuit.jpg' },
+    { name: 'Crabe mariné, avocat', price: '9,20 €', image: 'assets/uramaki-crabe.jpg' },
+  ]},
+  { title: 'Rolls', sub: 'x8 pièces', items: [
+    { name: 'Saumon, philadelphia, avocat, sauce teriyaki', price: '11,90 €', image: 'assets/roll-saumon.jpg' },
+    { name: 'Foie gras, mangue, praliné, sauce sumiso', price: '13,90 €', image: 'assets/roll-foie-gras.jpg' },
+    { name: 'Poulet spicy', price: '14,90 €', image: 'assets/roll-poulet.jpg' },
+    { name: 'Crevette', price: '14,90 €', image: 'assets/roll-crevette.jpg' },
+  ]},
+  { title: 'Temaki', sub: '', items: [
+    { name: 'Tartare saumon avocat', price: '6,90 €', image: 'assets/temaki-tartare-saumon.jpg' },
+    { name: 'Tartare thon, truffe, concombre', price: '8,20 €', image: 'assets/temaki-thon-truffe.jpg' },
+    { name: 'Œuf broyé, mayonnaise truffe, ikura', price: '7,50 €', image: 'assets/temaki-mayonnaise-truffe.jpg' },
+    { name: 'Saint-Jacques marinées', price: '8,90 €', image: 'assets/temaki-saint-jacque.jpg' },
+    { name: 'Anguille, tamago, sauce unagi', price: '8,90 €', image: 'assets/temaki-anguille.jpg' },
+    ['Surimi mariné, avocat', '7,90 €'],
+    { name: 'Crabe mariné, avocat', price: '7,90 €', image: 'assets/temaki-crabe-marine.jpg' },
+  ]},
+  { title: 'Plats chauds', sub: 'x3 pièces', items: [
+    { name: 'Karaagé', price: '6,90 €', image: 'assets/karaage.jpg' },
+    { name: 'Crevette tempura', price: '6,90 €', image: 'assets/crevette-tempura.jpg' },
+    { name: 'Takoyaki', price: '6,90 €', image: 'assets/takoyaki.jpg' },
+    { name: 'Soupe miso', price: '3,50 €', image: 'assets/soupe-miso.jpg' },
+    { name: 'Yakitori poulet poireaux X3', price: '5,90 €', image: 'assets/yakitori-poulet.jpg' },
+    { name: 'Yakitori boeuf fromage X2', price: '6,90 €', image: 'assets/yakitori-boeuf.jpg' },
+    { name: 'Takoyaki X4', price: '6,90 €', image: 'assets/takoyaki.jpg' },
+    { name: 'Nem poulet X3', price: '5,90 €', image: 'assets/nem.jpg' },
+    { name: 'Riz vinaigré', price: '3,50 €', image: 'assets/riz-vinaigre.jpg' },
+    ['Curry japonais', '12,90 €'],
+  ]},
+  { title: 'Nigiri', sub: '', items: [
+    { name: 'Saumon x5', price: '9,90 €', image: 'assets/nigiri-saumon.jpg' },
+    { name: 'Thon x5', price: '11,20 €', image: 'assets/nigiri-thon.jpg' },
+  ]},
+  { title: 'Poke', sub: '', items: [
+    { name: 'Poulet, edamame, avocat, mangue, wakame, carotte', price: '14,50 €', image: 'assets/poke-poulet.jpg' },
+    { name: 'Saumon teriyaki, edamame, avocat, mangue, wakame, carotte', price: '14,90 €', image: 'assets/poke-saumon.jpg' },
+    ['Thon truffe, edamame, avocat, mangue, wakame, carotte', '16,50 €'],
+  ]},
+  { title: 'Chirachi', sub: '', items: [
+    { name: 'Saumon, thon, saint-jacques, crevette', price: '15,90 €', image: 'assets/chirachi-saumon.jpg' },
+    { name: 'Saumon', price: '14,90 €', image: 'assets/chirachi-saumon.jpg' },
+  ]},
+  { title: 'Mochis', sub: 'x1 pièce', items: [
+    ['Vanille', '2,90 €'],
+    ['Mangue', '2,90 €'],
+    ['Mangue passion', '2,90 €'],
+    ['Passion', '2,90 €'],
+    ['Chocolat', '2,90 €'],
+    ['Thé matcha', '2,90 €'],
+    ['Fraise', '2,90 €'],
+    ['Caramel', '2,90 €'],
+  ]},
+  { title: 'Boissons', sub: '', items: [
+    ['Ramune', '3,50 €'],
+    ['Thé froid', '3,50 €'],
+    ['Coca', '3,00 €'],
+    ['Coca Zero', '3,00 €'],
+    ['Fanta', '3,00 €'],
+    ['Eau 50cl', '2,50 €'],
+    ['Eau gazeuse', '2,50 €'],
+  ]},
+];
+
+const tabsHost = document.getElementById('menuTabs');
+const listHost = document.getElementById('menuList');
+
+function renderCategory(idx) {
+  const cat = MENU[idx];
+  listHost.innerHTML = '';
+
+  if (cat.sub) {
+    const sub = document.createElement('div');
+    sub.className = 'menu-cat-sub';
+    sub.textContent = cat.sub;
+    listHost.appendChild(sub);
+  }
+
+  const list = document.createElement('div');
+  list.className = 'dish-list';
+  cat.items.forEach((item) => {
+    const dish = Array.isArray(item) ? { name: item[0], price: item[1] } : item;
+    const { name, price, image } = dish;
+    const row = document.createElement('div');
+    row.className = 'dish';
+    row.innerHTML = `
+      <div class="dish-main">
+        ${image ? `<img class="dish-image" src="${image}" alt="${name}">` : ''}
+        <span class="name">${name}</span>
+      </div>
+      <div class="dish-meta">
+        <span class="dots"></span>
+        <span class="price">${price}</span>
+      </div>`;
+    list.appendChild(row);
+  });
+  listHost.appendChild(list);
+
+  tabsHost.querySelectorAll('.tab-pill').forEach((el, i) => {
+    el.classList.toggle('active', i === idx);
+  });
+}
+
+MENU.forEach((cat, idx) => {
+  const pill = document.createElement('button');
+  pill.className = 'tab-pill';
+  pill.textContent = cat.title;
+  pill.addEventListener('click', () => {
+    renderCategory(idx);
+    pill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  });
+  tabsHost.appendChild(pill);
+});
+
+renderCategory(0); // show first category by default
+
+// ---- highlight today in hours table ----
+const todayIdx = new Date().getDay(); // 0 = Sunday
+document.querySelectorAll('#hoursTable tr').forEach(tr => {
+  if (parseInt(tr.dataset.day, 10) === todayIdx) tr.classList.add('today');
+});
+</script>
+
+</body>
+</html>
