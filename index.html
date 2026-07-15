@@ -111,7 +111,7 @@
     max-width:640px; margin:0 auto;
   }
   .brand{display:flex; align-items:center; gap:10px;}
-  .brand img{height:38px; width:auto;}
+  .brand img{height:38px; width:38px; object-fit:cover; border-radius:50%;}
   .brand-text{font-family:'Shippori Mincho',serif; font-size:16px; color:var(--gold-bright); letter-spacing:0.08em;}
   .brand-text span{display:block; font-size:9px; color:var(--sakura); font-family:'Zen Kaku Gothic New',sans-serif; letter-spacing:0.35em; margin-top:2px;}
 
@@ -158,7 +158,7 @@
     padding:120px 20px 60px;
     text-align:center;
   }
-  .hero-logo{width:150px; margin:0 auto 22px; filter:drop-shadow(0 8px 24px rgba(201,164,76,0.25));}
+  .hero-logo{width:150px; height:150px; margin:0 auto 22px; object-fit:cover; border-radius:50%; filter:drop-shadow(0 8px 24px rgba(201,164,76,0.25));}
   .eyebrow{
     font-size:11px; letter-spacing:0.4em; text-transform:uppercase;
     color:var(--sakura); margin-bottom:14px;
@@ -339,7 +339,7 @@
     padding:40px 20px 30px; text-align:center;
     border-top:1px solid var(--line);
   }
-  footer img{height:44px; margin:0 auto 12px; opacity:0.9;}
+  footer img{height:44px; width:44px; margin:0 auto 12px; object-fit:cover; border-radius:50%; opacity:0.9;}
   footer .fname{font-family:'Shippori Mincho',serif; color:var(--gold-bright); font-size:16px; letter-spacing:0.08em;}
   footer .faddr{font-size:12px; color:rgba(239,230,216,0.5); margin-top:6px;}
   footer .fnote{font-size:11px; color:rgba(239,230,216,0.35); margin-top:18px;}
@@ -387,7 +387,7 @@
 <header>
   <div class="nav-row">
     <a class="brand" href="#accueil">
-      <img src="assets/logo.png" alt="Shinano Sushi">
+      <img src="assets/logo2.jpg" alt="Shinano Sushi">
       <span class="brand-text">Shinano<span>SUSHI · ANNEMASSE</span></span>
     </a>
     <button class="burger" id="burgerBtn" aria-label="Ouvrir le menu"><span></span><span></span><span></span></button>
@@ -406,7 +406,7 @@
 <main id="accueil">
 
   <section class="hero">
-    <img class="hero-logo" src="assets/logo.png" alt="Shinano Sushi — logo">
+    <img class="hero-logo" src="assets/logo2.jpg" alt="Shinano Sushi — logo">
     <p class="eyebrow">Restaurant Japonais · Annemasse</p>
     <h1>Shinano Sushi</h1>
     <p class="sub">Fraîcheur · Tradition · Précision</p>
@@ -532,7 +532,7 @@
 </main>
 
 <footer>
-  <img src="assets/logo.png" alt="Shinano Sushi">
+  <img src="assets/logo2.jpg" alt="Shinano Sushi">
   <div class="fname">Shinano Sushi</div>
   <div class="faddr">32 Rue du Faucigny, 74100 Annemasse</div>
 
