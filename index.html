@@ -467,7 +467,7 @@
       <div class="rating-card">
         <div class="stars">★★★★★</div>
         <div class="rating-score">5,0<span>/5</span></div>
-        <div class="rating-count">Sur la base de 56 avis Google</div>
+        <div class="rating-count">Sur la base de 164 avis Google</div>
         <div class="rating-tags">
           <span>Cadre agréable</span>
           <span>Fraîcheur</span>
@@ -595,8 +595,7 @@ const MENU = [
   { title: 'Entrées', sub: '', items: [
     { name: 'Salade d’algues (Wakamé)', price: '5,00 €', image: 'assets/salade-algue.jpg' },
     { name: 'Salade de calamar (Chukaita)', price: '5,80 €', image: 'assets/salade-calamar.jpg' },
-    ['Salade édamame', '4,50 €'],
-    ['Salade composée (crabe, crevette, saumon)', '6,90 €'],
+    { name: 'Salade édamame', price: '4,50 €', image: 'assets/edamame.jpg' },
     { name: 'Portion de riz', price: '3,50 €', image: 'assets/portion-riz.jpg' },
   ]},
   { title: 'Hosomaki', sub: 'x6 pièces', items: [
@@ -606,7 +605,6 @@ const MENU = [
     { name: 'Avocat, philadelphia', price: '5,20 €', image: 'assets/hosomaki-avocat.jpg' },
     { name: 'Concombre, sésame', price: '5,20 €', image: 'assets/husomaki-concombre.jpg' },
     { name: 'Carotte, concombre avocat', price: '5,20 €', image: 'assets/hosomaki-carotte.jpg' },
-    ['Surimi mariné, avocat', '6,70 €'],
     { name: 'Crevette spicy', price: '6,60 €', image: 'assets/hosomaki-crevette.jpg' },
   ]},
   { title: 'Uramaki', sub: 'x8 pièces', items: [
@@ -630,7 +628,6 @@ const MENU = [
     { name: 'Œuf broyé, mayonnaise truffe, ikura', price: '7,50 €', image: 'assets/temaki-mayonnaise-truffe.jpg' },
     { name: 'Saint-Jacques marinées', price: '8,90 €', image: 'assets/temaki-saint-jacque.jpg' },
     { name: 'Anguille, tamago, sauce unagi', price: '8,90 €', image: 'assets/temaki-anguille.jpg' },
-    ['Surimi mariné, avocat', '7,90 €'],
     { name: 'Crabe mariné, avocat', price: '7,90 €', image: 'assets/temaki-crabe-marine.jpg' },
   ]},
   { title: 'Plats chauds', sub: 'x3 pièces', items: [
@@ -643,7 +640,7 @@ const MENU = [
     { name: 'Takoyaki X4', price: '6,90 €', image: 'assets/takoyaki.jpg' },
     { name: 'Nem poulet X3', price: '5,90 €', image: 'assets/nem.jpg' },
     { name: 'Riz vinaigré', price: '3,50 €', image: 'assets/riz-vinaigre.jpg' },
-    ['Curry japonais', '12,90 €'],
+    { name: 'Curry japonais', price: '12,90 €', image: 'assets/curry-japonais.jpg' },
   ]},
   { title: 'Nigiri', sub: '', items: [
     { name: 'Saumon x5', price: '9,90 €', image: 'assets/nigiri-saumon.jpg' },
